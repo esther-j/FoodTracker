@@ -1,24 +1,25 @@
 package com.example.foodtracker;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
+import org.joda.time.LocalDate;
+import org.joda.time.Months;
+import org.joda.time.Weeks;
+import org.joda.time.Years;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class FoodItemListAdapter extends RecyclerView.Adapter<FoodItemListAdapter.FoodItemViewHolder> {
 
@@ -74,23 +75,39 @@ public class FoodItemListAdapter extends RecyclerView.Adapter<FoodItemListAdapte
         if (mFoodItems != null) {
             FoodItem current = mFoodItems.get(position);
             holder.foodLabelView.setText(current.getFoodItem());
-            holder.expDateView.setText(dateToString(current.getExpirationDate()));
+            holder.expDateView.setText(getExpirationString(current.getExpirationDate()));
         } else {
             // Covers the case of data not being ready yet.
-            holder.foodLabelView.setText("No food item");
-            holder.expDateView.setText("Error");
+            holder.foodLabelView.setText(R.string.empty_error);
+            holder.expDateView.setText(R.string.empty_error);
         }
     }
 
-    String dateToString(Date date) {
+    private String getExpirationString(Date date) {
         Calendar curCal = Calendar.getInstance();
-        DateTime current = new DateTime(curCal);
+        LocalDate current = new DateTime(curCal).toLocalDate();
+        LocalDate expDate = new DateTime(date).toLocalDate();
+        int delta = Days.daysBetween(current, expDate).getDays();
 
-        DateTime otherDate = new DateTime(date);
-        int delta = Days.daysBetween(current, otherDate).getDays();
-        //SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-        //return df.format(date);
-        return Integer.toString(delta) + " days";
+        // get appropriate date string by casing on difference in days
+        String dateStr;
+        final int DAYS_IN_MONTH = curCal.getActualMaximum(Calendar.DAY_OF_MONTH);
+        final int DAYS_IN_YEAR = curCal.getActualMaximum(Calendar.DAY_OF_YEAR);
+        if (delta == 0) dateStr = "today";
+        else if (delta == 1) dateStr = "tomorrow";
+        else if (delta < Calendar.DAY_OF_WEEK) dateStr = String.format(Locale.US,"in %d days", delta);
+        else if (delta < DAYS_IN_MONTH) {
+            int weeks = Weeks.weeksBetween(current, expDate).getWeeks();
+            dateStr = String.format(Locale.US,"in %d week%s", weeks, weeks == 1 ? "" : "s");
+        } else if (delta < DAYS_IN_YEAR) {
+            int months = Months.monthsBetween(current, expDate).getMonths();
+            dateStr = String.format(Locale.US,"in %d month%s", months, months == 1 ? "" : "s");
+        } else {
+            int years = Years.yearsBetween(current, expDate).getYears();
+            dateStr = String.format(Locale.US,"in %d year%s", years, years == 1 ? "" : "s");
+        }
+
+        return String.format("Expires %s", dateStr);
     }
 
     void setFoodItems(List<FoodItem> foodItems){

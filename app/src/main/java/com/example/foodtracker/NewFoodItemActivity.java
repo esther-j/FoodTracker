@@ -37,8 +37,8 @@ public class NewFoodItemActivity extends AppCompatActivity {
         mEditDateView = findViewById(R.id.edit_date);
 
         Calendar cal = Calendar.getInstance();
-        int daysInWeek = 7;
-        cal.add(Calendar.DAY_OF_MONTH, daysInWeek); // jump a week forward
+        final int DAYS_IN_WEEK = 7;
+        cal.add(Calendar.DAY_OF_MONTH, DAYS_IN_WEEK); // jump a week forward
         int day = cal.get(Calendar.DAY_OF_MONTH);
         int month = cal.get(Calendar.MONTH); // for zero-indexing
         int year = cal.get(Calendar.YEAR);
@@ -94,6 +94,6 @@ public class NewFoodItemActivity extends AppCompatActivity {
         int year = cal.get(Calendar.YEAR);
         String dayStr = cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.getDefault());
         String monthStr = cal.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.getDefault());
-        return String.format("%s, %s %d %d", dayStr, monthStr, day, year);
+        return String.format(Locale.US,"%s, %s %d %d", dayStr, monthStr, day, year);
     }
 }
