@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Food Tracker</string>
+    <string name="food_label">Food:</string>
+    <string name="button_save">Save</string>
+    <string name="empty_not_saved">Failed to create food item</string>
+    <string name="abbr_exp_label">Expires in</string>
+    <string name="exp_label">Expiration Date (Automatically a week from today):</string>
+    <string name="hint_food_label">Enter food name:</string>
+</resources>

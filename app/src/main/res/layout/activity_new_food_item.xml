@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/food_text_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/big_padding"
+        android:paddingLeft="@dimen/big_padding"
+        android:text="@string/food_label" />
+
+    <EditText
+        android:id="@+id/edit_food_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/big_padding"
+        android:layout_marginRight="@dimen/big_padding"
+        android:fontFamily="sans-serif-light"
+        android:hint="@string/hint_food_label"
+        android:inputType="textAutoComplete"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/date_text_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/big_padding"
+        android:paddingLeft="@dimen/big_padding"
+        android:text="@string/exp_label" />
+
+    <EditText
+        android:id="@+id/edit_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/big_padding"
+        android:layout_marginRight="@dimen/big_padding"
+        android:focusable="false"
+        android:fontFamily="sans-serif-light"
+        android:inputType="none"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/button_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/big_padding"
+        android:background="@color/colorAccent"
+        android:text="@string/button_save"
+        android:textColor="@android:color/white" />
+
+</LinearLayout>
